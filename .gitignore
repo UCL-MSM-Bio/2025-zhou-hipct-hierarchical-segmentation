@@ -172,3 +172,16 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# folders containing big files
+results/
+data/
+
+# bash file
+*.sh
+
+# wandb logs
+wandb/
+
+#.vscode
+.vscode/

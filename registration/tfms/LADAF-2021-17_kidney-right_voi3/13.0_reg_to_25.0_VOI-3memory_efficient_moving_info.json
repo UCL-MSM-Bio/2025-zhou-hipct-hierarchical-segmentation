@@ -1,0 +1,21 @@
+{
+    "res": 0.013,
+    "cmpt": [
+        655,
+        700,
+        2984
+    ],
+    "dir": "/hdd/yang/data/kidney_seg/LADAF-2021-17_right/13.0um_LADAF-2021-17_kidney-right_VOI-03/normalised",
+    "crop_coords": [
+        [
+            281,
+            281,
+            0
+        ],
+        [
+            1640,
+            1640,
+            5955
+        ]
+    ]
+}

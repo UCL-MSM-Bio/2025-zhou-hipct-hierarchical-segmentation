@@ -161,6 +161,7 @@ class hipctNormaliser(hipctPreprocessor):
                 break
         # normalise the image based on the lower and upper bounds
         norm_slice = skex.rescale_intensity(image, in_range=(bin_centers_cdf[l_bound], bin_centers_cdf[u_bound]), out_range=(0, bins-1))
+        norm_slice = norm_slice.astype(self.dtype)
         # convert to 8 bit if required
         if self.convert_to_8_bit and self.dtype != np.uint8:
             norm_slice = ski.util.img_as_ubyte(norm_slice)
@@ -460,7 +461,7 @@ def convert_slices_to_volume(slice_dir, save_dir, im_type='tif', partition=1, ov
         print(f'Partition start: {start}, end: {end-1}')
         print(f'Number of slices in partition: {len(slice_files_partition)}')
         volume = []
-        for slice_file in tqdm.tqdm( slice_files_partition):
+        for slice_file in tqdm.tqdm(slice_files_partition):
            if im_type == 'tif':
                slice = skio.imread(slice_file, plugin='tifffile')
            else:
@@ -472,3 +473,41 @@ def convert_slices_to_volume(slice_dir, save_dir, im_type='tif', partition=1, ov
         skio.imsave(save_path, volume, plugin='tifffile', check_contrast=False)
         print(f'Volume saved at: {save_dir}')
         print('Conversion completed.')
+
+def devide_subvolumes(big_vol_path, segments=2, overlap_depth_in_pixels=0):
+    '''
+    This function divides a big volume into subvolumes.
+    Args:
+        big_vol_path: str, path to the big volume
+        segments: int, number of segments to divide the volume into
+        overlap_depth_in_pixels: int, overlap depth in pixels
+    Returns:
+        None
+    '''
+    big_vol = skio.imread(big_vol_path, plugin='tifffile')
+    print(f'Big volume shape: {big_vol.shape}')
+    vol_depth = big_vol.shape[0]
+
+    segment_size = vol_depth // segments
+    print(f'Segment size: {segment_size}')
+
+    if overlap_depth_in_pixels >= segment_size:
+        raise ValueError(f'Overlap depth {overlap_depth_in_pixels} is greater than or equal to segment size {segment_size}. Please reduce the overlap depth.')
+    
+    start = 0
+    end = 0
+    for i in tqdm.tqdm(range(segments)):
+        start = end - overlap_depth_in_pixels if i > 0 else 0
+        end = start + segment_size if i < segments - 1 else vol_depth-1
+        
+        if start < 0:
+            start = 0
+        if end > vol_depth:
+            end = vol_depth
+        
+        subvol = big_vol[start:end]
+        save_path = os.path.join(os.path.dirname(big_vol_path), os.path.basename(big_vol_path).replace('.tif', f'_subvol_{start}_{end}.tif'))
+        skio.imsave(save_path, subvol, plugin='tifffile', check_contrast=False)
+        print(f'Subvolume saved at: {save_path}')
+        print(f'Subvolume shape: {subvol.shape}')
+    print('Subvolume division completed.')

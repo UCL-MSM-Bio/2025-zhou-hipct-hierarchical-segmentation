@@ -1,0 +1,44 @@
+{
+    "5.2_reg_to_13.0_VOI-2.1":
+    {
+        "low_res":"13.0um",
+        "high_res":"5.2um",
+        "low_res_cmpt": [1143, 869, 1379],
+        "high_res_cmpt": [917, 919, 1548]
+    },
+    "5.2_reg_to_13.0_VOI-3.1":
+    {
+        "low_res":"13.0um",
+        "high_res":"5.2um",
+        "low_res_cmpt": [1133, 935, 2182],
+        "high_res_cmpt": [920, 433, 663]
+    },
+    "5.2_reg_to_25.0_VOI-3.1":
+    {
+        "low_res":"25.0um",
+        "high_res":"5.2um",
+        "low_res_cmpt": [461, 1069, 1254],
+        "high_res_cmpt": [1128, 382, 557]
+    },
+    "5.2_reg_to_25.0_VOI-2.1":
+    {
+        "low_res":"25.0um",
+        "high_res":"5.2um",
+        "low_res_cmpt": [888, 1816, 1528],
+        "high_res_cmpt": [1245, 806, 1882]
+    },
+    "13.0_reg_to_25.0_VOI-2":
+    {
+        "low_res":"25.0um",
+        "high_res":"13.0um",
+        "low_res_cmpt": [568, 1760, 1843],
+        "high_res_cmpt": [739, 516, 2110]
+    },
+    "13.0_reg_to_25.0_VOI-3":
+    {
+        "low_res":"25.0um",
+        "high_res":"13.0um",
+        "low_res_cmpt": [333, 1151, 1695],
+        "high_res_cmpt": [936, 981, 2984]
+    }
+}

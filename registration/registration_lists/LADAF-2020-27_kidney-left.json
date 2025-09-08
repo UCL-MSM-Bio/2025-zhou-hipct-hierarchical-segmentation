@@ -1,0 +1,37 @@
+{
+    "2.58_reg_to_12.1":
+    {
+        "low_res":"12.1um",
+        "high_res":"2.58um",
+        "low_res_cmpt": [874, 941, 3060],
+        "high_res_cmpt": [805, 870, 2692]
+    },
+    "2.58_reg_to_25.08":
+    {
+        "low_res":"25.08um",
+        "high_res":"2.58um",
+        "low_res_cmpt": [1414.666, 1685.166, 2182],
+        "high_res_cmpt": [556, 988, 609]
+    },
+    "2.58_reg_to_50.16":
+    {
+        "low_res":"50.16um",
+        "high_res":"2.58um",
+        "low_res_cmpt": [707.333, 842.583, 1091],
+        "high_res_cmpt": [556, 988, 609]
+    },
+    "12.1_reg_to_25.08":
+    {
+        "low_res":"25.08um",
+        "high_res":"12.1um",
+        "low_res_cmpt": [1175, 1466, 1566],
+        "high_res_cmpt": [330, 516, 1364]
+    },
+    "12.1_reg_to_50.16":
+    {
+        "low_res":"50.16um",
+        "high_res":"12.1um",
+        "low_res_cmpt": [587.167, 732.167, 783],
+        "high_res_cmpt": [330, 516, 1364]
+    }
+}
