@@ -205,8 +205,8 @@ class hipctNormaliser(hipctPreprocessor):
         # combine the logging results
         for log in logging_results:
             for key in log.keys():
-                print(f'Key: {key}')
-                print(f'Log: {log[key]}')
+                #print(f'Key: {key}')
+                #print(f'Log: {log[key]}')
                 self.json_dict[key] = log[key]
         json_file_path = os.path.join(self.output_dir, 'normalisation_parameters.json')
         with open(json_file_path, 'w') as f:
