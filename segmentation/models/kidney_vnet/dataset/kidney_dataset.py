@@ -27,7 +27,7 @@ class KidneyData(Dataset):
         with open(fold_file, 'r') as f:
             fold_dict = json.load(f)
         
-        self.label_list = fold_dict['fold{}'.format(self.fold)][self.mode]
+        self.label_list = fold_dict[self.fold][self.mode]
         for item in self.label_list:
             self.image_list.append(item.replace('label', 'cube'))
         

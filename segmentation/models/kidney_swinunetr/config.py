@@ -8,19 +8,19 @@ ORGANS = ['glomeruli']
 NUM_CLASSES = len(ORGANS) + 1 # +1 for background
 
 # CZI Path
-# PROJECT_PATH = '/hdd/yang/kidney_seg/kidney_swinunetr'
-# DATA_PATH = '/hdd/yang/data/kidney_seg'
+PROJECT_PATH = 'kidney_swinunetr'
+DATA_PATH = '/hdd/yang/projects/glomeruli_segmentation/data/high-res_training/'
 
 # CS Cluster
-# PROJECT_PATH = '/home/zhouyang/kidney_vnet'
+# PROJECT_PATH = '/home/zhouyang/kidney_vnet'3
 # DATA_PATH = '/home/zhouyang/data/kidney_seg'
 
 # JADE2
-PROJECT_PATH = 'kidney_swinunetr'
-DATA_PATH = 'data/kidney_seg'
+# PROJECT_PATH = 'kidney_swinunetr'
+# DATA_PATH = 'data/kidney_seg'
 
 # Dataloader path for n-fold cross validation
-SEPERATION='90_10'
+SEPARATION='90_10'
 FOLD=4
 
 SAVE_PATH = os.path.join(PROJECT_PATH, 'saves')
@@ -31,7 +31,7 @@ PRE_TRAINED = False
 PRE_TRAINED_MODEL = MODEL_NAME + '_fold' + str(FOLD) + '_final.tar'
 
 # Training parameters
-BATCH_SIZE = 8
+BATCH_SIZE = 1
 NUM_EPOCHS = 150
 LEARNING_RATE = 0.0005
 DECAY_RATE = 1e-4

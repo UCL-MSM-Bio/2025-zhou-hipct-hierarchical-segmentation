@@ -40,6 +40,8 @@ pip install -e .
 ```
 If you prefer using conda, please install the packages in the *pyproject.toml*, but you are still required to install nnUNet using pip (see the nnUNet official installation [document](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/installation_instructions.md)).
 
+Before using nnUNet, the paths are required to be set up: [link](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/setting_up_paths.md). A simple way is to modify the **path.py** file under *segmentation/models/nnUNet/nnunetv2*
+
 # Data Availability
 The high-resolution manually annotated data (in 2.58 um/voxel ~ 5.2 um/voxel) are available at https://doi.org/10.5281/zenodo.15397768.
 

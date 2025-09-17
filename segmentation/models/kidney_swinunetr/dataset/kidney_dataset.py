@@ -9,7 +9,7 @@ from natsort import natsorted
 import json
 
 class KidneyData(Dataset):
-    def __init__(self, root='data/', mode='train', seperation='90_10', fold=0, all_zero_involved=False, transforms=None):
+    def __init__(self, root='data/', mode='train', separation='90_10', fold=0, all_zero_involved=False, transforms=None):
         super(KidneyData, self).__init__()
         self.root = root
         self.mode = mode
@@ -20,14 +20,14 @@ class KidneyData(Dataset):
         self.label_list=[]
 
         try:
-            fold_file = os.path.join(self.root, seperation, 'valid_seperate_5fold.json')
+            fold_file = os.path.join(self.root, separation, 'separation_5folds.json')
         except FileNotFoundError:
             raise FileNotFoundError('Please generate the k-fold json file first!')
         
         with open(fold_file, 'r') as f:
             fold_dict = json.load(f)
         
-        self.label_list = fold_dict['fold{}'.format(self.fold)][self.mode]
+        self.label_list = fold_dict[self.fold][self.mode]
         for item in self.label_list:
             self.image_list.append(item.replace('label', 'cube'))
         
@@ -78,7 +78,7 @@ class KidneyData(Dataset):
         
 if __name__ == '__main__':
     np.random.seed(0)
-    dataset = KidneyData(root='D:\Yang\data\kidney_seg', mode='val', seperation='90_10', fold=0)
+    dataset = KidneyData(root='D:\Yang\data\kidney_seg', mode='val', separation='90_10', fold=0)
     print(len(dataset))
     #image, label = dataset[0]
     #print(image.shape)

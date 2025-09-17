@@ -13,7 +13,7 @@ NUM_CLASSES = len(ORGANS) + 1 # +1 for background
 # Lab Machine
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print("Project path: ", PROJECT_PATH)
-DATA_PATH = '/hdd/yang/projects/glomeruli_segmentation/data/high-res_training/'
+DATA_PATH = '/hdd/yang/projects/glomeruli_segmentation/2025-zhou-hipct-hierarchical-segmentation/data/high-res_training'
 
 # CS Cluster
 # PROJECT_PATH = '/home/zhouyang/kidney_vnet'

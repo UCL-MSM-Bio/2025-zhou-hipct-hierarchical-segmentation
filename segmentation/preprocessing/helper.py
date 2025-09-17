@@ -17,15 +17,15 @@ DATASETS = {'5um S-20-28': 20,
             '2.58um LADAF 2020-27 Left Kidney':4
             }
 
-def train_test_split(save_path, train_ratio=0.9, ):
+def train_test_split(save_dir, train_ratio=0.9):
     '''
     Split the 40 512x512x512 cubes into training and testing data based on a ratio.
     '''
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
     start = 0
-    with open (f'{save_path}/train_selected_cubes_tr{train_ratio}.txt', 'w') as f_train:     
-        with open (f'{save_path}/test_selected_cubes_tr{train_ratio}.txt', 'w') as f_test:
+    with open (f'{save_dir}/train_selected_cubes_tr{train_ratio}.txt', 'w') as f_train:     
+        with open (f'{save_dir}/test_selected_cubes_tr{train_ratio}.txt', 'w') as f_test:
             for sample in DATASETS:
                 print(f'Sample: {sample}, Total Cubes: {DATASETS[sample]}')
                 end = start + DATASETS[sample]
@@ -134,9 +134,9 @@ def generate_patch_list_per_sample(label_dir, train_cubes_txt, test_cube_txt, ou
 
 
 def generate_folds(n_folds, patch_list_per_sample, output_json_dir):
-    output_dict = {}
+    output_json = []
     for i in range(n_folds):
-        output_dict['fold'+str(i)] = {'train':[], 'val':[]}
+        output_json.append({'train':[], 'val':[]})
     with open(patch_list_per_sample, 'r') as f:
         data = json.load(f)
     for sample in data.keys():
@@ -144,18 +144,13 @@ def generate_folds(n_folds, patch_list_per_sample, output_json_dir):
         kf = KFold(n_splits=n_folds, shuffle=True, random_state=0)
         kf.get_n_splits(data[sample]['train']['files'])
         for i, (train_index, valid_index) in enumerate(kf.split(data[sample]['train']['files'])):
-                output_dict['fold'+str(i)]['train'] += np.asarray(data[sample]['train']['files'])[train_index].tolist()
-                output_dict['fold'+str(i)]['val'] += np.asarray(data[sample]['train']['files'])[valid_index].tolist()
+                output_json[i]['train'] += np.asarray(data[sample]['train']['files'])[train_index].tolist()
+                output_json[i]['val'] += np.asarray(data[sample]['train']['files'])[valid_index].tolist()
                 print('Train:', len(np.asarray(data[sample]['train']['files'])[train_index].tolist()))
                 print('Val:', len(np.asarray(data[sample]['train']['files'])[valid_index].tolist()))
 
-    for fold in output_dict.keys():
-        print('Fold:', fold)
-        print('Train:', len(output_dict[fold]['train']))
-        print('Val:', len(output_dict[fold]['val']))
-
-    with open(os.path.join(output_json_dir, f'seperation_{n_folds}folds.json'), 'w') as f:
-        json.dump(output_dict, f, indent=4)
+    with open(os.path.join(output_json_dir, f'separation_{n_folds}folds.json'), 'w') as f:
+        json.dump(output_json, f, indent=4)
 
 
 ################

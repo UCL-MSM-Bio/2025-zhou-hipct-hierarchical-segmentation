@@ -18,8 +18,8 @@ import os
 PLEASE READ paths.md FOR INFORMATION TO HOW TO SET THIS UP
 """
 # Update data customised folder - Yang - LINUX
-data_dir = '/hdd/yang/data/kidney_seg_nnunet'
-result_dir = '/hdd/yang/results/glomeruli_segmentation'
+data_dir = '/hdd/yang/projects/glomeruli_segmentation/2025-zhou-hipct-hierarchical-segmentation/data'
+result_dir = '/hdd/yang/projects/glomeruli_segmentation/2025-zhou-hipct-hierarchical-segmentation/results'
 nnUNet_raw = os.path.join(data_dir, 'nnUNet_raw') #os.environ.get('nnUNet_raw')
 nnUNet_preprocessed = os.path.join(data_dir, 'nnUNet_preprocessed') #os.environ.get('nnUNet_preprocessed')
 nnUNet_results = os.path.join(result_dir, 'nnUNet_results') #os.environ.get('nnUNet_results')

@@ -152,7 +152,6 @@ if __name__ == '__main__':
 
     # from monai
     net = SwinUNETR(
-        img_size=(128, 128, 128),
         in_channels=1,
         out_channels=2,
         depths=(2,2,2,2),
@@ -198,9 +197,9 @@ if __name__ == '__main__':
     
     '''DATA LOADER'''
     data_path = config.DATA_PATH
-    data_train = KidneyData(root=data_path, mode='train', seperation=config.SEPERATION, fold=config.FOLD, all_zero_involved=False, transforms=train_transforms)
+    data_train = KidneyData(root=data_path, mode='train', separation=config.SEPARATION, fold=config.FOLD, all_zero_involved=False, transforms=train_transforms)
     train_loader = DataLoader(data_train, batch_size=config.BATCH_SIZE, shuffle=True, num_workers=config.NUM_WORKERS, drop_last=True)
-    data_val = KidneyData(root=data_path, mode='val', seperation=config.SEPERATION, fold=config.FOLD, all_zero_involved=False, transforms=val_transforms)
+    data_val = KidneyData(root=data_path, mode='val', separation=config.SEPARATION, fold=config.FOLD, all_zero_involved=False, transforms=val_transforms)
     val_loader = DataLoader(data_val, batch_size=config.BATCH_SIZE, shuffle=False, num_workers=config.NUM_WORKERS, drop_last=True)
     print('Loading data from {}, using fold {}, length of train set is {}, length of val set is {}'.format(data_path, config.FOLD, len(data_train), len(data_val)))
 
