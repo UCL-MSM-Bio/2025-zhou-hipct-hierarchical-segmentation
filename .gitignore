@@ -185,3 +185,8 @@ wandb/
 
 #.vscode
 .vscode/
+
+# images
+*.png
+*.tif
+*.jp2

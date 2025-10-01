@@ -1,20 +1,14 @@
+import io
 import os
 import glob
 import tqdm
 import skimage.io as skio
 from natsort import natsorted
 import numpy as np
-from skimage import draw
-import json
-import skimage.exposure as skex
-import time
-import skimage as ski
-from pathlib import Path
-
-from multiprocessing import Pool, cpu_count
+from tqdm import tqdm
 
 
-def devide_subvolumes(big_vol_path, segments=2, overlap_depth_in_pixels=0):
+def divide_subvolumes(big_vol_path, segments=2, overlap_depth_in_pixels=0):
     '''
     This function divides a big volume into subvolumes.
     Args:
@@ -98,3 +92,37 @@ def concatenate_subvolumes(inference_dir, overlap_depth_in_pixels=0, output_path
     skio.imsave(output_path, big_vol, plugin='tifffile', check_contrast=False)
     print(f'Concatenated volume saved at: {output_path}')
     print(f'Concatenated volume shape: {big_vol.shape}')
+
+def remove_on_density(instance, x_center, y_center, z_center,shape=(3770, 1898, 1898), size=128, threshold=32):
+    flag = False
+
+    i_x_centre = instance['centroid_0']
+    i_y_centre = instance['centroid_1']
+    i_z_centre = instance['centroid_2']
+    i_x_start = int(i_x_centre - size//2) if (i_x_centre - size//2) > 0 else 0
+    i_y_start = int(i_y_centre - size//2) if (i_y_centre - size//2) > 0 else 0
+    i_z_start = int(i_z_centre - size//2) if (i_z_centre - size//2) > 0 else 0
+    i_x_end = int(i_x_centre + size//2) if (i_x_centre + size//2) <= shape[2] else shape[2]
+    i_y_end = int(i_y_centre + size//2) if (i_y_centre + size//2) <= shape[1] else shape[1]
+    i_z_end = int(i_z_centre + size//2) if (i_z_centre + size//2) <= shape[0] else shape[0]
+
+    count = -1 # count itself
+    for x, y, z in zip(x_center, y_center, z_center):
+        if x > i_x_start and x < i_x_end: 
+            if y > i_y_start and y < i_y_end:
+                if z > i_z_start and z < i_z_end:
+                    count += 1
+                    if count >= threshold:
+                        break
+    if count < threshold:
+        flag = True
+    return flag
+
+def apply_mask(mask_path, stack):
+    mask = skio.imread(mask_path, plugin='tifffile')
+    if mask.shape != stack.shape:
+        raise ValueError(f'Mask shape {mask.shape} and stack shape {stack.shape} do not match.')
+    masked_stack = np.multiply(stack, mask)
+    masked_stack[stack > 0] = 1
+    masked_stack = masked_stack.astype(np.uint8)
+    return masked_stack
