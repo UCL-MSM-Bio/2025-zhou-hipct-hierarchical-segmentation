@@ -187,6 +187,5 @@ wandb/
 .vscode/
 
 # images
-*.png
 *.tif
 *.jp2

@@ -13,4 +13,5 @@ R_TYPE = 'image'
 T_PATH = '/hdd/yang/code/hipct_registration/tfms/LADAF-2020-27_kidney-left_2.58_to_25.08'
 SAVE_PATH = '/hdd/yang/code/hipct_registration/results/LADAF-2020-27_kidney-left_2.58um'
 
+# saving the fixed image as a single .tif file for visualization
 SAVE_IMAGE = False

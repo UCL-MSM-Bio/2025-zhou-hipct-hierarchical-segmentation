@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "dask-image>=2024.5.3",
     "einops>=0.8.1",
     "ipykernel>=6.29.5",
+    "matplotlib>=3.10.7",
     "monai==1.5.0",
     "natsort>=8.4.0",
     "scikit-image==0.24.0",
