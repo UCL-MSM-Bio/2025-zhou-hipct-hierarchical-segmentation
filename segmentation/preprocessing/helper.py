@@ -10,14 +10,13 @@ from sklearn.model_selection import KFold
 import shutil
 from tqdm import tqdm
 
-# Do not change the order. This is the sample order of the 40 cubes.
-DATASETS = {'5um S-20-28': 20, 
-            '5.2um LADAF 2021-17 Left Kidney':7,
-            '5.2um LADAF 2021-17 Right Kidney':9,
-            '2.58um LADAF 2020-27 Left Kidney':4
-            }
+SAMPLE_LIST = ['5um S-20-28',
+               '5.2um LADAF-2021-17 Left Kidney',
+               '5.2um LADAF-2021-17 Right Kidney',
+               '2.58um LADAF-2020-27 Left Kidney'
+               ]
 
-def train_test_split(save_dir, train_ratio=0.9):
+def train_test_split(save_dir, dataset, train_ratio=0.9):
     '''
     Split the 40 512x512x512 cubes into training and testing data based on a ratio.
     '''
@@ -26,10 +25,10 @@ def train_test_split(save_dir, train_ratio=0.9):
     start = 0
     with open (f'{save_dir}/train_selected_cubes_tr{train_ratio}.txt', 'w') as f_train:     
         with open (f'{save_dir}/test_selected_cubes_tr{train_ratio}.txt', 'w') as f_test:
-            for sample in DATASETS:
-                print(f'Sample: {sample}, Total Cubes: {DATASETS[sample]}')
-                end = start + DATASETS[sample]
-                train_data_length = int(DATASETS[sample] * train_ratio)
+            for sample in dataset:
+                print(f'Sample: {sample}, Total Cubes: {dataset[sample]}')
+                end = start + dataset[sample]
+                train_data_length = int(dataset[sample] * train_ratio)
                 train_selected = random.sample(range(start, end), train_data_length)
                 train_selected.sort()
                 test_selected = list(set(range(start, end)) - set(train_selected))
@@ -73,7 +72,7 @@ def load_label(path):
     #tif_stack = tifffile.imread(path)
     return tif_stack
 
-def generate_patch_list_per_sample(label_dir, train_cubes_txt, test_cube_txt, output_path, non_zero_only=True):
+def generate_patch_list_per_sample(label_dir, train_cubes_txt, test_cube_txt, output_path, datasets, non_zero_only=True):
     '''
     Save the samples with valid label into json file
     '''
@@ -87,9 +86,9 @@ def generate_patch_list_per_sample(label_dir, train_cubes_txt, test_cube_txt, ou
     output_dict = {}
     output_dict_seperate = {}
     start = 0
-    for sample in DATASETS.keys():
+    for sample in datasets.keys():
         print('Working on sample:', sample)
-        end = start + DATASETS[sample]
+        end = start + datasets[sample]
         total_patch = []
         train_patch = []
         test_patch = []
@@ -201,7 +200,7 @@ def processing_nnunet_dataset(patch_dir, patch_list_per_sample, nnunet_raw_data_
         raw_data_seperate = json.load(f)
     train_data = []
     train_labels = []
-    for sample in DATASETS.keys():
+    for sample in SAMPLE_LIST:
         train_files = raw_data_seperate[sample]['train']['files']
         for item in train_files:
             train_labels.append(item)
